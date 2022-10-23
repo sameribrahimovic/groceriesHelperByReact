@@ -36,6 +36,18 @@ function App() {
       showAlert(true, "danger", "please enter value!");
     } else if (name && isEditing) {
       //edit
+      setList(
+        list.map((item) => {
+          if (item.id === editID) {
+            return { ...item, title: name };
+          }
+          return item;
+        })
+      );
+      setName("");
+      setEditID(null);
+      setIsEditing(false);
+      showAlert(true, "success", "task edited successfully!");
     } else {
       //show alert
       showAlert(true, "success", "task added");
@@ -60,7 +72,15 @@ function App() {
   const removeItem = (id) => {
     showAlert(true, "danger", "item removed!");
     //setting list to the new value using filter
+    //return only items whos id did not match
     setList(list.filter((item) => item.id !== id));
+  };
+
+  const editItem = (id) => {
+    const specificItem = list.find((item) => item.id === id);
+    setIsEditing(true);
+    setEditID(id);
+    setName(specificItem.title);
   };
 
   return (
@@ -87,7 +107,7 @@ function App() {
       {list.length > 0 && (
         <div className="grocery-container">
           {/* list component with items and removeItem as prop */}
-          <List items={list} removeItem={removeItem} />
+          <List items={list} removeItem={removeItem} editItem={editItem} />
           <button className="clear-btn" onClick={clearList}>
             clear items
           </button>
