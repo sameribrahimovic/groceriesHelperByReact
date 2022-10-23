@@ -22,6 +22,21 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     //console.log("You pressed submit button, it works!");
+
+    //add new item funcionality
+    if (!name) {
+      //display alert
+    } else if (name && isEditing) {
+      //edit
+    } else {
+      //show alert
+      //and create new item ot or add new item to the list
+      const newItem = { id: new Date().getTime().toString(), title: name };
+      //grab the old value from the list using spred operator ...list and add new item
+      setList([...list, newItem]);
+      //after adding new item, set input field to default blank state (empy string)
+      setName("");
+    }
   };
 
   return (
@@ -42,10 +57,15 @@ function App() {
           </button>
         </div>
       </form>
-      <div className="grocery-container">
-        <List />
-        <button className="clear-btn">clear items</button>
-      </div>
+
+      {/* show list of items only if there is previus added items */}
+      {list.length > 0 && (
+        <div className="grocery-container">
+          {/* list component with items as prop */}
+          <List items={list} />
+          <button className="clear-btn">clear items</button>
+        </div>
+      )}
     </section>
   );
 }
