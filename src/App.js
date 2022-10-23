@@ -57,11 +57,17 @@ function App() {
     setList([]);
   };
 
+  const removeItem = (id) => {
+    showAlert(true, "danger", "item removed!");
+    //setting list to the new value using filter
+    setList(list.filter((item) => item.id !== id));
+  };
+
   return (
     <section className="section-center">
       <form className="grocery-form" onSubmit={handleSubmit}>
         {/* pass in all properties(in this case those are show, msg and type) from state alert value */}
-        {alert.show && <Alert {...alert} removeAlert={showAlert} />}
+        {alert.show && <Alert {...alert} removeAlert={showAlert} list={list} />}
         <h3>Grocery Helper</h3>
         <div className="form-control">
           <input
@@ -80,8 +86,8 @@ function App() {
       {/* show list of items only if there is previus added items */}
       {list.length > 0 && (
         <div className="grocery-container">
-          {/* list component with items as prop */}
-          <List items={list} />
+          {/* list component with items and removeItem as prop */}
+          <List items={list} removeItem={removeItem} />
           <button className="clear-btn" onClick={clearList}>
             clear items
           </button>
