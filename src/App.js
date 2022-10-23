@@ -17,7 +17,11 @@ function App() {
   const [editID, setEditID] = useState(null);
 
   //for alert to be displayed
-  const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
+  const [alert, setAlert] = useState({
+    show: false,
+    msg: "",
+    type: "",
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,6 +30,10 @@ function App() {
     //add new item funcionality
     if (!name) {
       //display alert
+      //one way to show alert here is this :
+      //setAlert({ show: true, msg: "Please enter value", type: "danger" });
+      //second way to show alert :
+      showAlert(true, "danger", "please enter value!");
     } else if (name && isEditing) {
       //edit
     } else {
@@ -39,10 +47,15 @@ function App() {
     }
   };
 
+  const showAlert = (show = false, type = "", msg = "") => {
+    setAlert({ show, type, msg });
+  };
+
   return (
     <section className="section-center">
       <form className="grocery-form" onSubmit={handleSubmit}>
-        {alert.show && <Alert />}
+        {/* pass in all properties(in this case those are show, msg and type) from state alert value */}
+        {alert.show && <Alert {...alert} removeAlert={showAlert} />}
         <h3>Grocery Helper</h3>
         <div className="form-control">
           <input
