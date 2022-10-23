@@ -38,6 +38,7 @@ function App() {
       //edit
     } else {
       //show alert
+      showAlert(true, "success", "task added");
       //and create new item ot or add new item to the list
       const newItem = { id: new Date().getTime().toString(), title: name };
       //grab the old value from the list using spred operator ...list and add new item
@@ -49,6 +50,11 @@ function App() {
 
   const showAlert = (show = false, type = "", msg = "") => {
     setAlert({ show, type, msg });
+  };
+  const clearList = () => {
+    showAlert(true, "danger", "empty list");
+    //to cler all values
+    setList([]);
   };
 
   return (
@@ -76,7 +82,9 @@ function App() {
         <div className="grocery-container">
           {/* list component with items as prop */}
           <List items={list} />
-          <button className="clear-btn">clear items</button>
+          <button className="clear-btn" onClick={clearList}>
+            clear items
+          </button>
         </div>
       )}
     </section>
